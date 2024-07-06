@@ -170,3 +170,32 @@
     <script src="/js/common.js"></script>
     <script src="/js/clientSocket.js"></script>
 
+
+
+
+    <script>
+      function refreshNotificationsBadge() 
+  {
+      $.get("/api/notifications", { unreadOnly: true }, (data) => {
+          
+          var numResults = data.length;
+  
+          if(numResults > 0)
+              $(".notificationsBadge").text(numResults).addClass("active");
+          else
+              $(".notificationsBadge").text("").removeClass("active");
+  
+      })
+  }
+  function refreshMessagesBadge() 
+{
+    $.get("/api/chats", { unreadOnly: true }, (data) => {
+        var numResults = data.length;
+
+        if(numResults > 0)
+            $(".messagesBadge").text(numResults).addClass("active");
+        else
+            $(".messagesBadge").text(numResults).removeClass("active");
+    })
+}
+  </script>
