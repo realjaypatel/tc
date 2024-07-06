@@ -5,7 +5,10 @@ const bodyParser = require("body-parser")
 const User = require('../../schemas/UserSchema');
 const Post = require('../../schemas/PostSchema');
 const Notification = require('../../schemas/NotificationSchema');
-
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const upload = multer({ dest: "uploads/" }); 
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -226,6 +229,58 @@ router.put("/:id", async (req, res, next) => {
     })
 })
 
+router.post("/photopost", upload.single("photo"), async (req, res) => {
+
+
+
+    
+
+    try {
+        // Check if a file was uploaded
+        if (!req.file) {
+            return res.status(400).send({ success: false, message: "No file uploaded." });
+        }else{
+            try {
+                var filePath = `/uploads/post/${req.file.filename}.png`;
+                var tempPath = req.file.path;
+                var targetPath = path.join(__dirname, `../../${filePath}`);
+            
+                fs.rename(tempPath, targetPath, async error => {
+                    if(error != null) 
+                    {
+                        console.log(error);
+                        return res.sendStatus(400);
+                    }
+
+                });
+            } catch (error) {
+                return res.sendStatus(400)
+            }
+        }
+
+        // Create a new post with photo information
+        const postData = {
+            content: req.body.content,
+            postedBy: req.session.user,
+            photo:`/uploads/post/${req.file.filename}.png`,
+            desc:req.body.desc // Assuming Multer saves the file path in req.file.path
+        };
+
+        // Save the new post to the database
+        const newPost = await Post.create(postData);
+
+        // Populate user and notification logic if needed
+        await User.populate(newPost, { path: "postedBy" });
+        if (newPost.replyTo !== undefined) {
+            await Notification.insertNotification(newPost.replyTo.postedBy, req.session.user._id, "reply", newPost._id);
+        }
+
+        res.status(201).send(newPost);
+    } catch (error) {
+        console.error(error);
+        res.status(400).send({ success: false, message: "An error occurred while creating the photo post." });
+    }
+});
 async function getPosts(filter)
 {
     var results = await Post.find(filter)

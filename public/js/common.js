@@ -65,6 +65,7 @@ $("#submitPostButton, #submitReplyButton").click(() => {
 $("#replyModal").on("show.bs.modal", (event) => {
     var button = $(event.relatedTarget);
     var postId = getPostIdFromElement(button);
+    console.log('buttonpressed')
     $("#submitReplyButton").data("id", postId);
 
     $.get(`/api/posts/${postId}`, results => {
@@ -312,6 +313,7 @@ $(document).on("click", ".likeButton" ,(event) => {
 })
 
 $(document).on("click", ".retweetButton", (event) => {
+
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
     
@@ -511,6 +513,15 @@ function createPostHtml(postData, largeFont = false)
                         <div class='postBody'>
                             <span>${postData.content}</span>
                         </div>
+                    
+                        <div class='postBody'>
+                                ${postData.photo ? `<img src="${postData.photo}" alt="Photo"/>` : ''}
+    <div>
+         ${postData.desc ? `${postData.desc}` : ''}
+
+    </div>
+</div>
+                     
                         <div class='postFooter'>
                             <div class='postButtonContainer'>
                                 <button data-toggle='modal' data-target='#replyModal'>

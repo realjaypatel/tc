@@ -1,0 +1,15 @@
+<%- include('layouts/login-layout') %>
+
+<% var errorMessage = errorMessage|| ''; %>
+<% var logUsername = logUsername|| ''; %>
+
+    <div class="loginContainer">
+        <h1>Login</h1>
+        <form method="post">
+            <p class="errorMessage"><%= errorMessage %></p>
+            <input type="text" name="logUsername" placeholder="Username or email" value="<%= logUsername %>" required />
+            <input type="password" name="logPassword" placeholder="Password" required />
+            <input type="submit" value="Login" />
+        </form>
+        <a href="/register">Need an account? Register here.</a>
+    </div>

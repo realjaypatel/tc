@@ -1,0 +1,7 @@
+<% function createFollowButton(user, isFollowing) { %>
+    <% var text = isFollowing ? "Following" : "Follow"; %>
+    <% var buttonClass = isFollowing ? "followButton following" : "followButton"; %>
+    <button class="<%= buttonClass %>" data-user="<%= user._id %>"><%= text %></button>
+<% } %>
+
+<% createFollowButton(user,isFollowing) %>

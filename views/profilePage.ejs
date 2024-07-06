@@ -1,0 +1,88 @@
+<%- include('layouts/main-layout.ejs') %>
+<% var selectedTab = selectedTab|| ''; %>
+
+
+    <% if (!profileUser) { %>
+        <span class="errorMessage">Check the URL you are trying to access</span>
+    <% } else { %>
+        <script>
+            var profileUserId = '<%= profileUser._id %>';
+            var selectedTab = '<%= selectedTab %>';
+        </script>
+
+        <% var followersCount = profileUser.followers.length; %>
+        <% var followingCount = profileUser.following.length; %>
+
+        <div class="profileHeaderContainer">
+            <div class="coverPhotoSection">
+                <div class="coverPhotoContainer">
+                    <% if (profileUser.coverPhoto) { %>
+                        <img src="<%= profileUser.coverPhoto %>" alt="Cover Photo">
+                    <% } %>
+
+                    <% if (profileUser._id == userLoggedIn._id) { %>
+                        <button class="coverPhotoButton" data-toggle="modal" data-target="#coverPhotoUploadModal">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    <% } %>
+                </div>
+
+                <div class="userImageContainer">
+                    <img src="<%= profileUser.profilePic %>" alt="User profile image">
+
+                    <% if (profileUser._id == userLoggedIn._id) { %>
+                        <button class="profilePictureButton" data-toggle="modal" data-target="#imageUploadModal">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="profileButtonsContainer">
+                <% if (profileUser._id != userLoggedIn._id) { %>
+                    <a class="profileButton" href="/messages/<%= profileUser._id %>">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+
+                    <% var profileUserId = profileUser._id.toString(); %>
+                    <% if (userLoggedIn.following && userLoggedIn.following.includes(profileUserId)) { %>
+                        <%- include('mixins/createFollowButton.ejs', { user: profileUser, isFollowing: true }) %>
+                    <% } else { %>
+                        <%- include('mixins/createFollowButton.ejs', { user: profileUser, isFollowing: false }) %>
+                    <% } %>
+                <% } %>
+            </div>
+
+            <div class="userDetailsContainer">
+                <span class="displayName"><%= profileUser.firstName %> <%= profileUser.lastName %></span>
+                <span class="username">@<%= profileUser.username %></span>
+                <span class="description"><%= profileUser.description %></span>
+
+                <div class="followersContainer">
+                    <a href="/profile/<%= profileUser.username %>/following">
+                        <span class="value"><%= followingCount %></span>
+                        <span>Following</span>
+                    </a>
+                    <a href="/profile/<%= profileUser.username %>/followers">
+                        <span id="followersValue" class="value"><%= followersCount %></span>
+                        <span>Followers</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabsContainer">
+
+ <%- include('mixins/createTab.ejs', { name: "Posts", href: `/profile/${profileUser.username}`, isSelected: selectedTab !== "replies" }) %> 
+ <%- include('mixins/createTab.ejs', { name: "Replies", href: `/profile/${profileUser.username}/replies`, isSelected: selectedTab === "replies" }) %> 
+        </div>
+
+        <div class="pinnedPostContainer"></div>
+        <div class="postsContainer"></div>
+
+        <%- include('mixins/createPostModals.ejs', { userLoggedIn: userLoggedIn }) %>
+        <%- include('mixins/createImageUploadModal.ejs') %>
+        <%- include('mixins/createCoverPhotoUploadModal.ejs') %>
+    <% } %>
+    <%- include('layouts/footer.ejs') %>
+    <script src="/js/profile.js"></script>

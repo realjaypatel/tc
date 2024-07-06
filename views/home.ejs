@@ -1,0 +1,105 @@
+<%- include('layouts/main-layout') %>
+
+    <div class="postFormContainer">
+        <div class="userImageContainer">
+            <img src="<%= userLoggedIn.profilePic %>" alt="User's profile picture">
+        </div>
+        <div class="textareaContainer">
+            <textarea id="postTextarea" placeholder="What's happening?"></textarea>
+            <div class="buttonsContainer">
+                <button id="submitPostButton" disabled>Post</button>
+            </div>
+        </div>
+    </div>
+    <div class="postsContainer"></div>
+
+    <div id="replyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="replyModalLabel" class="modal-title">Reply</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="originalPostContainer"></div>
+                    <div class="postFormContainer">
+                        <div class="userImageContainer">
+                            <img src="<%= userLoggedIn.profilePic %>" alt="User's profile picture">
+                        </div>
+                        <div class="textareaContainer">
+                            <textarea id="replyTextarea" placeholder="Reply"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                    <button id="submitReplyButton" class="btn btn-primary" type="button" disabled>Reply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="deletePostModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deletePostModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="deletePostModalLabel" class="modal-title">Delete the post?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>You won't be able to delete this.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                    <button id="deletePostButton" class="btn btn-primary" type="button">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmPinModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmPinModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="confirmPinModalLabel" class="modal-title">Pin this post?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This post will appear at the top of your profile. You can only pin one post.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button id="pinPostButton" class="btn btn-primary" type="button">Pin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="unpinModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="unpinModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="unpinModalLabel" class="modal-title">Unpin the post?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This post will be unpinned.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button id="unpinPostButton" class="btn btn-primary" type="button">Unpin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('layouts/footer') %>
+    <script src="/js/home.js"></script>

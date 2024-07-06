@@ -9,5 +9,8 @@ const User = require('../schemas/UserSchema');
 router.get("/images/:path", (req, res, next) => {
     res.sendFile(path.join(__dirname, `../uploads/images/${req.params.path}`));
 })
+router.get("/post/:path", (req, res, next) => {
+    res.sendFile(path.join(__dirname, `../uploads/post/${req.params.path}`));
+})
 
 module.exports = router;

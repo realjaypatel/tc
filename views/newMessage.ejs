@@ -1,0 +1,15 @@
+<%- include('layouts/main-layout') %>
+
+    <div class="chatPageContainer">
+        <div class="chatTitleBar">
+            <label for="userSearchTextbox">To:</label>
+            <div id="selectedUsers">
+                <input id="userSearchTextbox" type="text" placeholder="Type the name of the person">
+            </div>
+        </div>
+        <div class="resultsContainer">
+            <!-- Content goes here -->
+        </div>
+        <button id="createChatButton" disabled>Create chat</button>
+    </div>
+    <%- include('layouts/footer') %>

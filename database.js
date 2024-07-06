@@ -17,7 +17,7 @@ class Database {
     }
 
     connect() {
-        mongoose.connect("mongodb+srv://user:user@cluster0.1rfnjdd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+        mongoose.connect("mongodb+srv://user:user@cluster0.1rfnjdd.mongodb.net/as?retryWrites=true&w=majority&appName=Cluster0")
         .then(() => {
             console.log("database connection successful");
         })

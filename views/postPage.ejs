@@ -1,0 +1,13 @@
+<%- include('layouts/main-layout') %>
+
+    <script>
+        var postId = '<%= postId %>';
+    </script>
+
+    <div class="postsContainer"></div>
+
+    <%- include('mixins/createPostModals', { userLoggedIn: userLoggedIn }) %>
+    <%- include('layouts/footer') %>
+
+    <script src="/js/postPage.js"></script>
+

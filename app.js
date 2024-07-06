@@ -4,7 +4,7 @@
  */
 const express = require('express');
 const app = express();
-const port = 3003;
+const port = 8008;
 const middleware = require('./middleware')
 const path = require('path')
 const bodyParser = require("body-parser")
@@ -15,7 +15,7 @@ const session = require('express-session');
 const server = app.listen(port, () => console.log("Server listening on port " + port));
 const io = require("socket.io")(server, { pingTimeout: 60000 });
 
-app.set("view engine", "pug");
+app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use(express.urlencoded({ extended: false })); //app.use(bodyParser.urlencoded({ extended: false })); //bodyParser deprecated in Express v4.16+ // amended for ./routes/{loginRoutes, logout}.js
@@ -26,7 +26,8 @@ app.use(session({
 	resave: true,
 	saveUninitialized: false
 }))
-
+//AddPost
+const addPost = require('./routes/addPost.js')
 // Routes
 const loginRoute = require('./routes/loginRoutes');
 const registerRoute = require('./routes/registerRoutes');
@@ -45,7 +46,8 @@ const chatsApiRoute = require('./routes/api/chatsAPI');
 const messagesApiRoute = require('./routes/api/messagesAPI');
 const notificationsApiRoute = require('./routes/api/notificationsAPI');
 
-
+//Use AddPost
+app.use("/addPost", addPost);
 //Use Routes
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);

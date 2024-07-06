@@ -1,0 +1,28 @@
+<!-- createReplyModal.ejs -->
+<div id="replyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="replyModalLabel" class="modal-title">Reply</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="originalPostContainer"></div>
+                <div class="postFormContainer">
+                    <div class="userImageContainer">
+                        <img src="<%= userLoggedIn.profilePic %>" alt="User's profile picture">
+                    </div>
+                    <div class="textareaContainer">
+                        <textarea id="replyTextarea" placeholder="Reply"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="submitReplyButton" type="button" class="btn btn-primary" disabled>Reply</button>
+            </div>
+        </div>
+    </div>
+</div>
