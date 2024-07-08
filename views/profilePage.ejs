@@ -73,8 +73,8 @@
 
         <div class="tabsContainer">
 
- <%- include('mixins/createTab.ejs', { name: "Posts", href: `/profile/${profileUser.username}`, isSelected: selectedTab !== "replies" }) %> 
- <%- include('mixins/createTab.ejs', { name: "Replies", href: `/profile/${profileUser.username}/replies`, isSelected: selectedTab === "replies" }) %> 
+ <%- include('mixins/createTab.ejs', { name: "Posts", url: `/profile/${profileUser.username}`, isSelected: selectedTab !== "replies" }) %> 
+ <%- include('mixins/createTab.ejs', { name: "Replies", url: `/profile/${profileUser.username}/replies`, isSelected: selectedTab === "replies" }) %> 
         </div>
 
         <div class="pinnedPostContainer"></div>

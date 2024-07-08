@@ -57,7 +57,61 @@ router.get("/", async (req, res, next) => {
     var results = await getPosts(searchObj);
     res.status(200).send(results);
 })
+router.get("/global", async (req, res, next) => {
 
+    var searchObj = req.query; 
+
+    //Prepare searchObj for getPosts(filter)
+    if(searchObj.isReply !== undefined)
+    {
+        var isReply = searchObj.isReply == "true";
+        searchObj.replyTo = { $exists: isReply };
+        delete searchObj.isReply; //delete property from JS object
+    }
+
+    //Case in-sensitive search
+    if(searchObj.search !== undefined)
+    {
+        searchObj.content = { $regex: searchObj.search, $options: "i" };
+        delete searchObj.search;
+    }
+
+    //Only show if following
+    if(searchObj.followingOnly !== undefined) {
+        var followingOnly = searchObj.followingOnly == "true";
+
+        if(followingOnly) {
+            var objectIds = [];
+            
+            //Checks if array does NOT exist //Error handling
+            if(!req.session.user.following) {
+                req.session.user.following = [];
+            }
+
+            req.session.user.following.forEach(user => {
+                objectIds.push(user);
+            })
+
+            objectIds.push(req.session.user._id);
+            searchObj.postedBy = { $in: objectIds };
+        }
+        
+        delete searchObj.followingOnly;
+    }
+    
+    var results = await getPosts({});
+    solution  =[]
+    results.forEach(post => {
+        // Check if the post has a replyTo value
+        if (post.replyTo) {
+
+        } else {
+            solution.push(post)
+        }
+    });
+
+    res.status(200).send(solution);
+})
 router.get("/:id", async (req, res, next) => {
 
     var postId = req.params.id;
@@ -232,14 +286,13 @@ router.put("/:id", async (req, res, next) => {
 router.post("/photopost", upload.single("photo"), async (req, res) => {
 
 
-
+    photoname = ''
     
 
     try {
         // Check if a file was uploaded
-        if (!req.file) {
-            return res.status(400).send({ success: false, message: "No file uploaded." });
-        }else{
+        if (req.file) {
+           
             try {
                 var filePath = `/uploads/post/${req.file.filename}.png`;
                 var tempPath = req.file.path;
@@ -253,16 +306,17 @@ router.post("/photopost", upload.single("photo"), async (req, res) => {
                     }
 
                 });
+                photoname = `/uploads/post/${req.file.filename}.png`
             } catch (error) {
                 return res.sendStatus(400)
             }
         }
-
+    
         // Create a new post with photo information
         const postData = {
             content: req.body.content,
             postedBy: req.session.user,
-            photo:`/uploads/post/${req.file.filename}.png`,
+            photo:photoname,
             desc:req.body.desc // Assuming Multer saves the file path in req.file.path
         };
 

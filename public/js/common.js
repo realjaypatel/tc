@@ -510,16 +510,19 @@ function createPostHtml(postData, largeFont = false)
                             ${buttons}
                         </div>
                         ${replyFlag}
-                        <div class='postBody'>
-                            <span>${postData.content}</span>
+                        <div class='postBody post-content-text'>
+                            <p>${postData.content}</p>
                         </div>
                     
                         <div class='postBody'>
-                                ${postData.photo ? `<img src="${postData.photo}" alt="Photo"/>` : ''}
-    <div>
-         ${postData.desc ? `${postData.desc}` : ''}
 
-    </div>
+                        <div class="post-content-text post-content-image">
+              
+                        ${postData.photo ? `<img src="${postData.photo}" alt="Photo"/>` : ''}      
+                      </div>
+        <p id="text" class="text">
+            ${postData.desc ? `${postData.desc}` : ''}    </p>
+
 </div>
                      
                         <div class='postFooter'>
@@ -563,19 +566,19 @@ function timeDifference(current, previous)
     if (elapsed < msPerMinute) {
         if(elapsed/1000 < 30) return "Just now";
         
-        return Math.round(elapsed/1000) + ' seconds ago';   
+        return Math.round(elapsed/1000) + ' s ago';   
     }
 
     else if (elapsed < msPerHour) {
-         return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+         return Math.round(elapsed/msPerMinute) + ' m ago';   
     }
 
     else if (elapsed < msPerDay ) {
-         return Math.round(elapsed/msPerHour ) + ' hours ago';   
+         return Math.round(elapsed/msPerHour ) + ' h ago';   
     }
 
     else if (elapsed < msPerMonth) {
-        return Math.round(elapsed/msPerDay) + ' days ago';   
+        return Math.round(elapsed/msPerDay) + ' d ago';   
     }
 
     else if (elapsed < msPerYear) {
@@ -960,3 +963,5 @@ function getUserChatImageElement(user)
 
     return `<img src='${user.profilePic}' alt='User's profile pic'>`;
 }
+
+

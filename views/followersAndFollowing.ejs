@@ -1,0 +1,22 @@
+<%- include('layouts/main-layout.ejs') %>
+
+<% if (!profileUser) { %>
+    <span class="errorMessage">Check the url you are trying to access</span>
+<% } else { %>
+    <script>
+        var profileUserId = '<%= profileUser._id %>';
+        var selectedTab = '<%= selectedTab %>';
+    </script>
+
+    <div class="tabsContainer">
+ 
+        <%- include('mixins/createTab.ejs', { name: 'Following', url: `/profile/${profileUser.username}/following`, isSelected: selectedTab != 'followers' }) %>
+        <%- include('mixins/createTab.ejs', { name: 'Followers', url: `/profile/${profileUser.username}/followers`, isSelected: selectedTab == 'followers' }) %>
+    </div>
+
+    <div class="resultsContainer"></div>
+<% } %>
+<%- include('layouts/footer') %>
+    <script src="/js/followersAndFollowing.js"></script>
+
+    

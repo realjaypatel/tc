@@ -74,6 +74,19 @@ app.get("/", middleware.requireLogin, (req, res, next) => {
 		userLoggedIn: req.session.user,
 		//userLoggedInJs: '{' + '"_id":' + JSON.stringify(req.session.user._id) + '}', //Modified for security purposes
 		userLoggedInJs: JSON.stringify(req.session.user),
+        selectedTab : 'global'
+    }
+
+    res.status(200).render("home", payload);
+})
+app.get("/following", middleware.requireLogin, (req, res, next) => {
+
+    var payload = {
+        pageTitle: "Home",
+		userLoggedIn: req.session.user,
+		//userLoggedInJs: '{' + '"_id":' + JSON.stringify(req.session.user._id) + '}', //Modified for security purposes
+		userLoggedInJs: JSON.stringify(req.session.user),
+        selectedTab : 'following'
     }
 
     res.status(200).render("home", payload);

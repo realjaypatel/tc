@@ -1,117 +1,132 @@
 <%- include('layouts/main-layout') %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Post Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input[type="text"],
-        .form-group input[type="file"] {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            resize: vertical;
-            min-height: 100px;
-        }
-        .form-group button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .form-group button:hover {
-            background-color: #45a049;
-        }
-    </style>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        resize: vertical;
+        min-height: 100px;
+    }
+    .form-group button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .form-group button:hover {
+        background-color: #45a049;
+    }
+    #photoPreview {
+        display: block;
+        max-width: 100%;
+        margin-top: 15px;
+    }
+</style>
 </head>
 <body>
-    <h1>Photo Post Form</h1>
 
-    <form id="postForm" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="content">Post Content:</label>
-            <input type="text" id="content" name="content" required>
-        </div>
-        <div class="form-group">
-            <label for="desc">Description:</label>
-            <textarea id="desc" name="desc"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="photo">Upload Photo:</label>
-            <input type="file" id="photo" name="photo" accept="image/*" required>
-        </div>
-        <div class="form-group">
-            <button type="submit">Create Post</button>
-        </div>
-    </form>
+<form id="postForm" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="content">Post Content:</label>
+        <input type="text" id="content" name="content" required>
+    </div>
+    <div class="form-group">
+        <label for="desc">Description:</label>
+        <textarea id="desc" name="desc"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="photo">Upload Photo:</label>
+        <input type="file" id="photo" name="photo" accept="image/*" >
+    </div>
+    <img id="photoPreview" src="" alt="Image Preview" style="display:none;">
+    <div class="form-group">
+        <button type="submit">Create Post</button>
+    </div>
+</form>
 
-    <div id="message"></div>
+<div id="message"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        const form = document.getElementById('postForm');
-        const message = document.getElementById('message');
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const form = document.getElementById('postForm');
+    const message = document.getElementById('message');
+    const photoInput = document.getElementById('photo');
+    const photoPreview = document.getElementById('photoPreview');
 
-        form.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(form);
-
-            try {
-                const response = await axios.post('/api/posts/photopost', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                // Handle successful response
-                console.log('Post created:', response.data);
-                message.innerHTML = '<p>Post created successfully!</p>';
-
-                // Clear form after submission
-                form.reset();
-            } catch (error) {
-                // Handle error
-                console.error('Error creating post:', error);
-                message.innerHTML = '<p>An error occurred while creating the post.</p>';
+    // Event listener to show image preview when an image is uploaded
+    photoInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                photoPreview.src = e.target.result;
+                photoPreview.style.display = 'block';
             }
-        });
-    </script>
-</body>
-</html>
+            reader.readAsDataURL(file);
+        } else {
+            photoPreview.src = '';
+            photoPreview.style.display = 'none';
+        }
+    });
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const formData = new FormData(form);
+
+        try {
+            const response = await axios.post('/api/posts/photopost', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            // Handle successful response
+            console.log('Post created:', response.data);
+            message.innerHTML = '<p>Post created successfully!</p>';
+
+            // Clear form after submission
+            form.reset();
+            photoPreview.src = '';
+            photoPreview.style.display = 'none';
+        } catch (error) {
+            // Handle error
+            console.error('Error creating post:', error);
+            message.innerHTML = '<p>An error occurred while creating the post.</p>';
+        }
+    });
+</script>
 
 
-
-    
-    <%- include('layouts/footer') %>
+<%- include('layouts/footer') %>

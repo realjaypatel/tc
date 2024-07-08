@@ -84,7 +84,7 @@
 
                 <title>Trextter</title>
                 <link rel="icon" type="image/x-icon" href="/img/trex.png" />
-                <script defer src="src\main.js"></script>
+                <script defer src="/src/main.js"></script>
             </head>
 
             <body>
@@ -132,13 +132,13 @@
             <span>Lists</span>
           </div> -->
 
-                            <div class="icon-text-button"><a href="/">
+                            <div class="icon-text-button"><a href="/profile">
                                     <i class="material-symbols-outlined">account_circle</i></a>
                                 <span>Profile</span>
                             </div>
 
-                            <div class="action-button large-button" onclick="openPopup('treet')">
-                                <span>Treet</span>
+                            <div class="action-button large-button" ><a href="/addpost">
+                                <span>ADD</span></a>
                             </div>
                         </div>
 
@@ -195,8 +195,8 @@
                                 <i class="material-symbols-outlined">account_circle</i></a>
                             </div>
 
-                            <div class="action-button circle-icon-button" onclick="openPopup('treet')">
-                                <i class="material-symbols-outlined">send</i>
+                            <div class="action-button circle-icon-button"> <a href=" /addpost">
+                                <i class="material-symbols-outlined">send</i></a>
                             </div>
                         </div>
 
@@ -216,14 +216,17 @@
 
                         <div class="mobile-header">
                             <!-- Menu -->
-                            <i
-                                class="icon-button icon-xlarge left material-symbols-outlined noselect">account_circle</i>
+                            <a href="/profile">
+                            <i class="icon-button icon-xlarge left material-symbols-outlined noselect">account_circle</i></a>
                             <!-- Logo -->
                             <div class="logo noselect">
                                 <a href="index.html"><img src="/img/trex.png" alt="t-rex image" /></a>
                             </div>
                             <!-- More -->
-                            <i class="icon-button icon-xlarge right material-symbols-outlined noselect">menu</i>
+                    
+                        <a href="/addpost">
+                            <i class="icon-button icon-xlarge right material-symbols-outlined noselect">add</i>
+                        </a> 
                         </div>
 
                         <div class="mobile-fab icon-button noselect">
@@ -263,8 +266,7 @@
 
 
                         <div class="main-content-grid">
-
-
+                           
 
 
                             <style>
@@ -281,6 +283,11 @@
     }
 }
 
+.main-content-grid a {
+    justify-self: center;
+    margin: 0px;
+    text-decoration: none;
+}
 
         
 </style>
@@ -337,7 +344,23 @@
     top: -50px;
     right:-20px
 }
+.circle-icon-button {
+    border-radius: 50px;
+    height: 56px;
+    padding: 16px;
+    margin: 0;
+    width: fit-content;
+    position: relative;
+    left: -5px;
+}
+@media screen and (max-width: 705px) {
+    .main .mobile-header {
+        display: grid;
+        justify-content: space-between;
+    }
+}
 </style>
+
 
 
 
