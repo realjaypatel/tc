@@ -4,7 +4,7 @@
  */
 const express = require('express');
 const app = express();
-const port = 8008;
+const port = 8000;
 const middleware = require('./middleware')
 const path = require('path')
 const bodyParser = require("body-parser")
@@ -47,12 +47,12 @@ const messagesApiRoute = require('./routes/api/messagesAPI');
 const notificationsApiRoute = require('./routes/api/notificationsAPI');
 
 //Use AddPost
-app.use("/addPost", addPost);
+app.use("/addPost",middleware.requireLogin, addPost);
 //Use Routes
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/logout", logoutRoute);
-app.use("/posts", middleware.requireLogin, postRoute);
+app.use("/posts", postRoute);
 app.use("/profile", middleware.requireLogin, profileRoute);
 app.use("/uploads", uploadRoute);
 app.use("/search", middleware.requireLogin, searchRoute);
@@ -72,7 +72,6 @@ app.get("/", middleware.requireLogin, (req, res, next) => {
     var payload = {
         pageTitle: "Home",
 		userLoggedIn: req.session.user,
-		//userLoggedInJs: '{' + '"_id":' + JSON.stringify(req.session.user._id) + '}', //Modified for security purposes
 		userLoggedInJs: JSON.stringify(req.session.user),
         selectedTab : 'global'
     }

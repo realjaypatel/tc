@@ -520,7 +520,8 @@ function createPostHtml(postData, largeFont = false)
               
                         ${postData.photo ? `<img src="${postData.photo}" alt="Photo"/>` : ''}      
                       </div>
-
+        <p id="text" class="text">
+            ${postData.desc ? `${postData.desc}` : ''}    </p>
 
 </div>
                      

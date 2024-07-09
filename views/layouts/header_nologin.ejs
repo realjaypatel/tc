@@ -1,6 +1,4 @@
-<% var userLoggedInJs=userLoggedInJs|| '' ; %>
-    <% var pageTitle=pageTitle|| '' ; %>
-        <% var tempp=(userLoggedInJs) %>
+
             <!DOCTYPE html>
             <html lang="en">
 
@@ -18,10 +16,7 @@
                     crossorigin="anonymous" referrerpolicy="no-referrer">
                 <link rel="stylesheet" href="/css/main.css">
             </head>
-            <script type='text/javascript'>
-                var userLoggedIn = <%-tempp %>;
 
-            </script>
           
           
           <!-- <body> 
@@ -229,8 +224,8 @@
                         </a> 
                         </div>
 
-                        <div class="mobile-fab icon-button noselect">
-                            <i class="material-symbols-outlined">add</i>
+                        <div class="mobile-fab icon-button noselect"><a href="/addpost">
+                            <i class="material-symbols-outlined">add</i></a>
                         </div>
 
                         <div class="mobile-nav-bar noselect">
@@ -359,6 +354,9 @@
         justify-content: space-between;
     }
 }
+
+
+
 </style>
 
 

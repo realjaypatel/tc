@@ -863,21 +863,21 @@ body {
 }
 
 /* Back to Content start */
-.main-content-grid a {
-  /* Button */
+/* .main-content-grid a {
+ 
   justify-self: center;
   margin: 16px;
   text-decoration: none;
-}
-.main-content-grid a i {
-  /* Button Icon */
+} */
+/* .main-content-grid a i {
+
   font-size: 50px;
   transition: 0.1s;
   font-variation-settings: "FILL" 0;
-}
-.main-content-grid a:active i {
+} */
+/* .main-content-grid a:active i {
   font-variation-settings: "FILL" 1;
-}
+} */
 /* MAIN END */
 
 /* MEDIA QUERIES */

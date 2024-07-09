@@ -1,4 +1,4 @@
-<%- include('layouts/main-layout.ejs') %>
+<%- include('layouts/header.ejs') %>
 <% var selectedTab = selectedTab|| ''; %>
 
 
@@ -39,6 +39,13 @@
             </div>
 
             <div class="profileButtonsContainer">
+                <% if (profileUser._id == userLoggedIn._id) { %>
+                    <a class="profileButton" href="/logout">
+                        Logout
+                    </a>
+
+                    
+                <% } %>
                 <% if (profileUser._id != userLoggedIn._id) { %>
                     <a class="profileButton" href="/messages/<%= profileUser._id %>">
                         <i class="fas fa-envelope"></i>
@@ -84,5 +91,6 @@
         <%- include('mixins/createImageUploadModal.ejs') %>
         <%- include('mixins/createCoverPhotoUploadModal.ejs') %>
     <% } %>
+
     <%- include('layouts/footer.ejs') %>
     <script src="/js/profile.js"></script>
